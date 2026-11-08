@@ -1,94 +1,45 @@
+# Hawk
 
-# 🌐 Hawk Trading System 🚀
+AI-driven high-frequency cryptocurrency trading system: market data collection, model training, backtesting and a web dashboard.
 
-Hawk Trading is a high-frequency cryptocurrency trading system designed for speed, accuracy, and flexibility.
+## Features
 
----
+- Market data sync and indicator calculation
+- Model training and backtesting with visualization
+- Trading and position management
+- React dashboard
 
-## ✨ Features
+## Tech stack
 
-- 📈 **Real-time market data streaming**
-- ⚡ **High-frequency trading support**
-- 📊 **Order book visualization**
-- 💼 **Trading history and position management**
-- 📋 **Performance analytics**
-- 🔄 **Backtesting capabilities**
+Python 3.9+, Poetry, python-binance, FastAPI; React and TypeScript frontend
 
----
-
-## 🛠️ Installation
-
-1. **Clone the repository**:
-
-   ```bash
-   git clone https://github.com/yourusername/hawk-trading.git
-   cd hawk-trading/backend
-   ```
-
-2. **Create and activate a virtual environment**:
-
-   ```bash
-   python -m venv .venv
-   source .venv/bin/activate  # macOS/Linux
-   .venv\Scripts\activate     # Windows
-   ```
-
-3. **Install dependencies**:
-
-   ```bash
-   pip install -r requirements.txt
-   ```
-
----
-
-## ▶️ Usage
-
-### 🎯 Training and Backtesting
-
-To train the model and perform backtesting, run:
+## Getting started
 
 ```bash
-python scripts/train_and_backtest.py
+git clone https://github.com/elanchou/hawk.git
+cd hawk/backend
+poetry install
 ```
 
----
+Edit `backend/config.yaml` for your data source and keys, then:
 
-### 📡 Market Data Retrieval
-
-Before training and backtesting, ensure market data retrieval is properly configured. Verify that the data source provides data with a `timestamp` column. 
-
-Check the data retrieval logic in `src/services/market_data_service.py`.
-
----
-
-### 🛑 Error Handling
-
-Encountering this error?  
-```
-KeyError: "None of ['timestamp'] are in the columns"
+```bash
+poetry run python scripts/sync_market_data.py       # fetch market data
+poetry run python scripts/train_and_backtest.py     # train and backtest
+poetry run python src/main.py                       # API service
+cd ../frontend && yarn install && yarn start        # dashboard
 ```
 
-Here’s how to resolve it:
+`scripts/start.sh` starts backend and frontend together.
 
-1. ✅ Confirm that the data source includes the `timestamp` column.  
-2. 🐛 Debug by printing the DataFrame's column names in the `get_market_data` method:
+## Troubleshooting
 
-   ```python
-   print("DataFrame columns:", df.columns)
-   ```
+`KeyError: "None of ['timestamp'] are in the columns"`: the data source must return a `timestamp` column. Check `get_market_data` in `backend/src/services/market_data_service.py`.
 
-3. ⚙️ Double-check the data loading logic and format.
+## Project structure
 
----
-
-## 🤝 Contribution
-
-Contributions are welcome! 🙌 Submit your issues or pull requests to help us improve. 🚀
-
----
-
-## 📜 License
-
-This project is licensed under the **MIT License**. See the [LICENSE](LICENSE) file for details. 📄
-
-Happy Trading! 🎉
+```text
+backend/src/    api, data, ml, models, backtesting, trading, services
+backend/scripts/ sync, train, backtest, visualize
+frontend/src/   components, services, types
+```
